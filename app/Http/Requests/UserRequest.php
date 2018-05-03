@@ -37,6 +37,7 @@ class UserRequest extends FormRequest
     {
         return [
             'avatar.mimes' => '头像必须是jpeg, bmp, png, gif格式的图片',
+            'avatar.dimensions' => '图片的清晰度不够，宽和高需要200px以上',
             'name.unique' => '用户名已被占用，请重新填写',
             'name.regex' => '用户名只支持英文、数字、横杆、和下划线',
             'name.between' => '用户名必须介于3 - 25 个字符之间。',

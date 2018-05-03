@@ -32,8 +32,28 @@ class ImageUploadHandler
 
         $file->move($upload_path, $filename);
 
+        if ($max_width && $extension != 'gif') {
+            $this->reduceSize($upload_path . '/' . $filename, $max_width);
+        }
+
         return [
             'path' => config('app.url') . "/folder_name/$filename"
         ];
+    }
+
+    public function reduceSize($file_path, $max_width)
+    {
+        // 磁盘物理路径
+        $image = Image::make($file_path);
+        // 大小调整操作
+        $image->resize($max_width, null, function ($constraint) {
+            // 等比例缩放
+            $constraint->aspectRatio();
+
+            // 防止截图图片变大
+            $constraint->upsize();
+        });
+
+        $image->save();
     }
 }
