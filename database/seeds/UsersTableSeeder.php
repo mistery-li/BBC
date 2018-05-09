@@ -23,7 +23,6 @@ class UsersTableSeeder extends Seeder
             'https://fsdhubcdn.phphub.org/uploads/images/201710/14/1/NDnzMutoxX.png?imageView2/1/w/200/h/200',
         ];
 
-        // 生成数据集合
         $users = factory(User::class)
             ->times(10)
             ->make()
@@ -32,16 +31,17 @@ class UsersTableSeeder extends Seeder
                 $user->avatar = $faker->randomElement($avatars);
             });
 
-        // 隐藏字段可见，数据集合转换为数组
+        // 隐藏字段可见，数据转为数组
         $user_array = $users->makeVisible(['password', 'remember_token'])->toArray();
 
+        // 插入数据库
         User::insert($user_array);
 
-        // 单独第一个用户处理
+        // 单独一个用户
         $user = User::find(1);
         $user->name = 'liii';
         $user->email = '853402477@qq.com';
-        $user->avatar = 'http://localhost/folder_name/1_1525697525_TiEZTS9hRM.jpg';
+        $user->avatar = 'https://fsdhubcdn.phphub.org/uploads/images/201710/14/1/ZqM7iaP4CR.png?imageView2/1/w/200/h/200';;
         $user->save();
     }
 }

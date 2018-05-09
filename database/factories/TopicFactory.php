@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\Topic::class, function (Faker $faker) {
     $sentence = $faker->sentence();
 
-    // 一个月以内随机时间
+    // 随机一个月以内时间
     $updated_at = $faker->dateTimeThisMonth();
 
     $created_at = $faker->dateTimeThisMonth($updated_at);
