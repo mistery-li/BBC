@@ -9,8 +9,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>@yield('title', 'BBC')- BBC论坛</title>
+        <meta name="descroption" content="@yield('description', 'BBC论坛')" />
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        @yield('styles')
     </head>
 
     <body>
@@ -26,5 +28,6 @@
         </div>
 
         <script src="{{ asset('js/app.js') }}"></script>
+        @yield('scripts')
     </body>
 </html>
