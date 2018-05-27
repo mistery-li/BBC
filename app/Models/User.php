@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Auth;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    use HasRoles;
     use Notifiable {
         notify as protected laravelNotify;
     }
@@ -60,5 +62,25 @@ class User extends Authenticatable
         $this->notification_count = 0;
         $this->save();
         $this->unreadNotifications->markAsRead();
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        // 如果值的长度等于60，即加密过
+        if (strlen($value) != 60) {
+            // 加密处理
+            $value = bcrypt($value);
+        }
+        $this->attributes['password'] = $value;
+    }
+
+    public function setAvatarAttribute($path)
+    {
+        // 如果不是http开头，就是后台上传，不全url
+        if (! starts_with($path, 'http')) {
+            $path = config('app.url') . "/uploads/images/avatars/$path";
+        }
+
+        $this->attributes['avatar'] = $path;
     }
 }
